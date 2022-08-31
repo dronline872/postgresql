@@ -1,0 +1,21 @@
+Создание таблицы:
+CREATE TABLE products (
+    "id" SERIAL,
+    "name" Character Varying,
+	"price" Real DEFAULT 0 NOT NULL
+);
+
+Добавление строк в таблицу:
+INSERT INTO products (id, name, price) VALUES 
+    (1, 'Computer', 100000.00),
+    (2, 'Phone', 60000.00),
+    (3, 'TV', 60000.00),
+    (4, 'Glasses', 10000.00);
+
+Список сущностей:
+Table "public.products"
+ Column |       Type        | Collation | Nullable |               Default                | Storage  | Stats target | Description 
+--------+-------------------+-----------+----------+--------------------------------------+----------+--------------+-------------
+ id     | integer           |           | not null | nextval('products_id_seq'::regclass) | plain    |              | 
+ name   | character varying |           |          |                                      | extended |              | 
+ price  | real              |           | not null | 0                                    | plain    |              | 
