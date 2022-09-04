@@ -15,18 +15,20 @@ use-case:
 CREATE TABLE users( 
 	id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name Character Varying,
-    email Character Varying
+    email Character Varying,
+	CONSTRAINT email_validate CHECK(email ~ '^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$')
 );
 
 -- Товары
 CREATE TABLE products( 
 	id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	name Character Varying,
-	price Real DEFAULT 0 NOT NULL,
+	price Real NOT NULL,
 	sort Integer DEFAULT 0 NOT NULL,
 	active Boolean DEFAULT 'true' NOT NULL,
 	description Text,
-	img Character Varying
+	img Character Varying,
+	CONSTRAINT not_zero_price CHECK (price > 0)
 );
 
 -- Корзины пользователей
@@ -34,11 +36,12 @@ CREATE TABLE carts (
 	id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	user_id Integer NOT NULL,
 	product_id Integer NOT NULL,
-	product_count Integer DEFAULT 0 NOT NULL,
+	product_count Integer NOT NULL,
 	created_at Timestamp Without Time Zone DEFAULT now() NOT NULL,
 	updated_at Timestamp Without Time Zone DEFAULT now() NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users (id),
-	FOREIGN KEY (product_id) REFERENCES products (id)
+	FOREIGN KEY (product_id) REFERENCES products (id),
+	CONSTRAINT not_zero_product_count CHECK (product_count > 0)
 );
 
 -- Заказы пользователей
@@ -64,5 +67,6 @@ CREATE TABLE orders_products (
     created_at Timestamp Without Time Zone DEFAULT now() NOT NULL,
 	updated_at Timestamp Without Time Zone DEFAULT now() NOT NULL,
 	FOREIGN KEY (order_id) REFERENCES orders (id),
-	FOREIGN KEY (product_id) REFERENCES products (id)
+	FOREIGN KEY (product_id) REFERENCES products (id),
+	CONSTRAINT not_zero_product_count CHECK (product_count > 0)
 );
