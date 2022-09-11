@@ -70,3 +70,10 @@ CREATE TABLE orders_products (
 	FOREIGN KEY (product_id) REFERENCES products (id),
 	CONSTRAINT not_zero_product_count CHECK (product_count > 0)
 );
+
+-- Индексы
+-- Индекс для products
+CREATE INDEX concurrently products_name_idx ON products USING btree (name text_pattern_ops);
+
+-- Индекс для users
+CREATE INDEX concurrently users_name_email_idx ON users (email, name);
