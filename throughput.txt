@@ -1,0 +1,60 @@
+Процессор: AMD Ryzen 5 5600G with Radeon Graphics 3.9GHz
+ОЗУ: 16 гб
+Количество ядер: 6
+Диск: ssd 250гб
+
+MaxConns MinConns = 1
+------------------------
+duration: 10.130859505s
+threads: 1000
+queries: 77496
+QPS: 7749
+------------------------
+
+MaxConns MinConns = 5
+------------------------
+duration: 10.030339036s
+threads: 1000
+queries: 331605
+QPS: 33160
+------------------------
+
+MaxConns MinConns = 10
+------------------------
+duration: 10.01955795s
+threads: 1000
+queries: 526931
+QPS: 52693
+------------------------
+
+MaxConns MinConns = 20
+------------------------
+duration: 10.01399706s
+threads: 1000
+queries: 787248
+QPS: 78724
+------------------------
+
+MaxConns MinConns = 30
+------------------------
+duration: 10.018916825s
+threads: 1000
+queries: 878524
+QPS: 87852
+------------------------
+
+MaxConns MinConns = 40
+------------------------
+duration: 10.015700909s
+threads: 1000
+queries: 966216
+QPS: 96621
+------------------------
+
+MaxConns MinConns = 50
+------------------------
+duration: 10.010377162s
+threads: 1000
+queries: 874090
+QPS: 87409
+------------------------
