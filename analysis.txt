@@ -1,0 +1,39 @@
+Запрос SELECT id FROM products WHERE name LIKE 'Товар%';
+
+До создания индекса
+ Seq Scan on products  (cost=0.00..9104.14 rows=13 width=4) (actual time=0.008..12.696 rows=17 loops=1)
+   Filter: ((name)::text ~~ 'Товар%'::text)
+   Rows Removed by Filter: 99354
+ Planning Time: 0.928 ms
+ Execution Time: 12.707 ms
+(5 rows)
+
+После создания индекса
+Bitmap Heap Scan on products  (cost=4.55..55.13 rows=13 width=4) (actual time=0.017..0.019 rows=17 loops=1)
+   Filter: ((name)::text ~~ 'Товар%'::text)
+   Heap Blocks: exact=1
+   ->  Bitmap Index Scan on products_name_idx  (cost=0.00..4.55 rows=13 width=0) (actual time=0.011..0.012 rows=17 loops=1)
+         Index Cond: (((name)::text ~>=~ 'Товар'::text) AND ((name)::text ~<~ 'Товас'::text))
+ Planning Time: 0.163 ms
+ Execution Time: 0.032 ms
+(7 rows)
+
+Запрос SELECT name FROM users WHERE email = 'test1@test.com';
+
+До создания индекса
+Seq Scan on users  (cost=0.00..1686.49 rows=6 width=2) (actual time=0.011..4.504 rows=2 loops=1)
+   Filter: ((email)::text = 'test1@test.com'::text)
+   Rows Removed by Filter: 99397
+ Planning Time: 0.040 ms
+ Execution Time: 4.515 ms
+(5 rows)
+
+После создания индекса
+Bitmap Heap Scan on users  (cost=4.46..26.45 rows=6 width=2) (actual time=0.014..0.014 rows=2 loops=1)
+   Recheck Cond: ((email)::text = 'test1@test.com'::text)
+   Heap Blocks: exact=1
+   ->  Bitmap Index Scan on user_name_email_idx  (cost=0.00..4.46 rows=6 width=0) (actual time=0.010..0.010 rows=2 loops=1)
+         Index Cond: ((email)::text = 'test1@test.com'::text)
+ Planning Time: 0.097 ms
+ Execution Time: 0.027 ms
+(7 rows)
